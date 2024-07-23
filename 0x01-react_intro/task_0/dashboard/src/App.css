@@ -1,3 +1,9 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .App {
   min-height: 100vh;
   display: flex;
@@ -5,8 +11,10 @@
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 100px;
+  width: auto;
   pointer-events: none;
+  margin-right: 1rem;
 }
 
 /* @media (prefers-reduced-motion: no-preference) {
@@ -22,17 +30,18 @@
   align-items: center;
   font-size: 2rem;
   color: red;
-  border-bottom: 2px solid red;
+  border-bottom: 3px solid red;
 }
 
 .App-body, .App-footer {
-  font-size: 1rem;
+  font-size: 1.5rem;
 }
 
 .App-body {
   flex: 1;
   padding-top: 3rem;
   padding-left: 2rem;
+  border-bottom: 3px solid red;
 }
 
 .App-footer {
