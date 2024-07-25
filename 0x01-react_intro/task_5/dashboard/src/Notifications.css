@@ -1,0 +1,16 @@
+.Notifications {
+    border: 1px dashed red;
+    padding: 10px;
+}
+
+.Notifications ul {
+    color: red;
+}
+
+.Notifications ul li:first-child {
+    color: blue;
+}
+
+.Notifications > p {
+    font-weight: bold;
+}
