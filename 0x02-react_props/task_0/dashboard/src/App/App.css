@@ -1,0 +1,24 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .App {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .App-logo {
+    height: 100px;
+    width: auto;
+    pointer-events: none;
+    margin-right: 1rem;
+  }
+
+.App-body {
+  padding-left: 30px;
+  padding-top: 30px;
+  flex: 1;
+}
