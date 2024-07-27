@@ -5,7 +5,7 @@ import { getFullYear, getFooterCopy } from "../Utils/Utils";
 function Footer() {
   return (
     <div className="App-footer">
-      <p>{`${getFooterCopy(true)} - ${getFullYear()}`}</p>
+      <p>Copyright {getFullYear()} - {getFooterCopy()}</p>
       </div>
   );
 }
