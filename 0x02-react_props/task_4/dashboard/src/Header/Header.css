@@ -1,0 +1,20 @@
+.App-header {
+    min-height: 20vh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 2rem;
+    color: red;
+    border-bottom: 3px solid red;
+  }
+
+  .App-logo {
+    height: 100px;
+    width: auto;
+    pointer-events: none;
+    margin-right: 1rem;
+  }
+
+  .App-link {
+    color: #61dafb;
+  }
