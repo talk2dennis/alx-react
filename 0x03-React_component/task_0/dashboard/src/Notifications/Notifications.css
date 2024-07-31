@@ -1,0 +1,31 @@
+.Notifications {
+    border: 1px dashed red;
+    padding: 10px;
+}
+
+.Notifications ul {
+    color: red;
+}
+
+.Notifications ul li:first-child {
+    color: blue;
+}
+
+.Notifications > p {
+    font-weight: bold;
+}
+
+.btn-notification {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-notification img {
+    display: inline;
+    margin-right: 5px;
+    padding: 0;
+}
