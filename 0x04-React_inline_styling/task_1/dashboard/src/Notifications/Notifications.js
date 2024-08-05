@@ -1,9 +1,33 @@
 import React, { Component } from "react";
-import "./Notifications.css";
 import closeIcon from "../assets/close-icon.png";
 import NotificationItem from "./NotificationItem";
 import PropTypes from "prop-types";
 import NotificationItemShape from "./NotificationItemShape";
+import { StyleSheet, css } from "aphrodite";
+
+
+const styles = StyleSheet.create({
+  notifications: {
+    padding: '1em',
+    border: '2px dashed red',
+    position: 'absolute',
+    top: '1.8em',
+    right: '0',
+  },
+  notificationHeader: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  menuItem: {
+    textAlign: 'right',
+  },
+  defaultNotification: {
+    color: 'blue',
+  },
+  urgentNotification: {
+    color: 'red',
+  },
+});
 
 class Notifications extends Component {
   constructor(props) {
@@ -23,11 +47,11 @@ class Notifications extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="menuItem">
+        <div className={css(styles.menuItem)}>
           <p>Your notifications</p>
         </div>
         {this.props.displayDrawer ? (
-          <div className="Notifications">
+          <div className={css(styles.notifications)}>
             <button
               style={{
                 color: "#3a3a3a",

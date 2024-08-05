@@ -1,6 +1,31 @@
 import React from "react";
-import "./Notifications.css";
 import PropTypes from "prop-types";
+import { StyleSheet, css } from "aphrodite";
+
+
+const styles = StyleSheet.create({
+  notifications: {
+    padding: '1em',
+    border: '2px dashed red',
+    position: 'absolute',
+    top: '1.8em',
+    right: '0',
+  },
+  notificationHeader: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  menuItem: {
+    textAlign: 'right',
+  },
+  defaultNotification: {
+    color: 'blue',
+  },
+  urgentNotification: {
+    color: 'red',
+  },
+});
+
 
 class NotificationItem extends React.PureComponent {
   render() {
