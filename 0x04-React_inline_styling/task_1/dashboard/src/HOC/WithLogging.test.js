@@ -2,6 +2,7 @@ import React from "react";
 import { shallow } from "enzyme";
 import WithLogging from "./WithLogging";
 
+
 const TestComponent = () => <p>Test Component</p>;
 
 describe("WithLogging tests", () => {

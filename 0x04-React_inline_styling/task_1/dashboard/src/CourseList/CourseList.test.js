@@ -9,6 +9,7 @@ const listCourses = [
   { id: 3, name: "React", credit: 40 },
 ];
 
+
 describe("CourseList component tests", () => {
   it("should render without crashing", () => {
     const wrapper = shallow(<CourseList />);

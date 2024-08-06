@@ -2,6 +2,7 @@ import React from "react";
 import NotificationItem from "./NotificationItem";
 import { shallow } from "enzyme";
 
+
 describe("rendering components", () => {
   it("renders NotificationItem component without crashing", () => {
     const wrapper = shallow(<NotificationItem />);
