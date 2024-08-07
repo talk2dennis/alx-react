@@ -13,6 +13,21 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: '1.8em',
     right: '0',
+
+    '@media (max-width: 375px)': {
+      height: "100vh",
+      width: "100vw",
+      display: 'block',
+      position: 'fixed',
+      backgroundColor: 'white',
+      border: 'none',
+      margin: '0',
+      padding: '0',
+      top: '0',
+      left: '0',
+      right: '0',
+      bottom: '0',
+    },
   },
   notificationHeader: {
     display: 'flex',
@@ -56,7 +71,7 @@ class Notifications extends Component {
               style={{
                 color: "#3a3a3a",
                 fontWeight: "bold",
-                background: "none",
+                background: "white",
                 border: "none",
                 fontSize: "15px",
                 position: "absolute",

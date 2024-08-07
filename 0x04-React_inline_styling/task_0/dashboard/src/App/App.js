@@ -6,9 +6,19 @@ import CourseList from "../CourseList/CourseList";
 import Notifications from "../Notifications/Notifications";
 import BodySectionWithMarginBottom from "../BodySection/BodySectionWithMarginBottom";
 import BodySection from "../BodySection/BodySection";
-import "./App.css";
 import PropTypes from "prop-types";
 import { getLatestNotification } from "../utils/utils";
+import { StyleSheet, css } from "aphrodite";
+
+
+const styles = StyleSheet.create({
+  App: {
+    height: "100vh",
+    maxWidth: "100vw",
+    position: "relative",
+    fontFamily: "Arial, Helvetica, sans-serif",
+  },
+});
 
 class App extends React.Component {
   constructor(props) {
@@ -46,7 +56,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
+      <>
         <div className="App">
           <div className="heading-section">
             <Notifications listNotifications={this.listNotifications} />
@@ -69,7 +79,7 @@ class App extends React.Component {
           </BodySection>
           <Footer />
         </div>
-      </React.Fragment>
+      </>
     );
   }
 }
