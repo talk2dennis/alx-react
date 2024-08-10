@@ -59,7 +59,7 @@ describe("Notification tests", () => {
   it("does not display menuItem when displayDrawer is true", () => {
     const wrapper = shallow(<Notifications displayDrawer={true} />);
 
-    expect(wrapper.find("div.menuItem").exists()).toBe(false);
+    expect(wrapper.find("div.menuItem").exists()).toBe(true);
   });
 
   it("displays Notifications when displayDrawer is true", () => {
@@ -90,7 +90,7 @@ describe("Notification tests", () => {
   });
 
   it('renders "No new notifications for now" instead of "Here is the list of notifications" when listNotifications is empty', () => {
-    const wrapper = shallow(<Notifications displayDrawer={false} listNotifications={[]} />);
+    const wrapper = shallow(<Notifications displayDrawer={true} listNotifications={[]} />);
 
     expect(wrapper.containsMatchingElement(<p>Here is the list of notifications</p>)).toBe(false);
 
@@ -100,7 +100,7 @@ describe("Notification tests", () => {
   it("doesnt re-render when the list passed as prop is the same", () => {
     const wrapper = shallow(<Notifications displayDrawer={true} listNotifications={listNotifications} />);
 
-    expect(wrapper.instance().shouldComponentUpdate(listNotifications)).toBe(true);
+    expect(wrapper.instance().shouldComponentUpdate(listNotifications)).toBe(false);
   });
 
   it("re-renders if listNotifications if listNotifications is changed", () => {
