@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import Login from "../Login/Login";
@@ -40,7 +40,7 @@ class App extends React.Component {
       this.props.logOut();
     }
   }
-
+  
   handleDisplayDrawer = () => {
     console.log("Opening drawer");
     this.setState({ displayDrawer: true });

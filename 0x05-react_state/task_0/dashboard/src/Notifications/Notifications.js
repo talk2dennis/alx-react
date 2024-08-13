@@ -33,7 +33,7 @@ class Notifications extends Component {
     super(props);
     this.markAsRead = this.markAsRead.bind(this);
   }
-
+  
   shouldComponentUpdate(nextProps) {
   return nextProps.displayDrawer !== this.props.displayDrawer;
 }
@@ -97,14 +97,6 @@ Notifications.propTypes = {
   handleDisplayDrawer: PropTypes.func,
   handleHideDrawer: PropTypes.func,
 };
-
-Notifications.defaultProps = {
-  displayDrawer: false,
-  listNotifications: [],
-  handleDisplayDrawer: () => {},
-  handleHideDrawer: () => {},
-};
-
 
 Notifications.defaultProps = {
   displayDrawer: false,
