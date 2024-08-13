@@ -1,6 +1,7 @@
 {
   "name": "dashboard",
   "version": "1.0.0",
+  "homepage": "https://talk2dennis.github.io/alx-react",
   "description": "",
   "main": "./src/index.js",
   "scripts": {
@@ -8,7 +9,9 @@
     "build": "webpack --mode production --config config/webpack.config.js",
     "start": "webpack serve --open --mode development --config config/webpack.config.js",
     "test": "jest",
-    "test-watch": "jest --watch"
+    "test-watch": "jest --watch",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +27,7 @@
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.8",
     "file-loader": "^6.2.0",
+    "gh-pages": "^6.1.1",
     "glob": "^11.0.0",
     "image-webpack-loader": "^8.0.0",
     "jest": "^28.1.0",
