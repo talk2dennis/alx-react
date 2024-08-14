@@ -3,9 +3,6 @@ module.exports = {
     parserOptions: {
         ecmaVersion: 2020,
         sourceType: 'module',
-        ecmaFeatures: {
-            jsx: true,
-        },
     },
     env: {
         browser: true,
@@ -18,6 +15,7 @@ module.exports = {
     plugins: [
         'jest'
     ],
+    settings: {},
     rules: {
         // Customize ESLint rules here
     },
