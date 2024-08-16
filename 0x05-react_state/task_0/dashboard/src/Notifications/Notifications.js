@@ -47,7 +47,7 @@ class Notifications extends Component {
     console.log("Current displayDrawer:", this.props.displayDrawer);
     return (
       <React.Fragment>
-        <div className={css(styles.menuItem)} onClick={this.props.handleDisplayDrawer}>
+        <div className={css(styles.menuItem)} onClick = { this.props.handleDisplayDrawer }>
           <p>Your notifications</p>
         </div>
         {this.props.displayDrawer ? (
