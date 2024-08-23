@@ -1,29 +1,34 @@
+import { Map } from 'immutable';
 import uiReducer, { initialState } from './uiReducer';
-import { DISPLAY_NOTIFICATION_DRAWER } from '../actions/uiActionTypes';
+import { LOGIN, DISPLAY_NOTIFICATION_DRAWER } from '../actions/uiActionTypes';
 
-// Test suite for the uiReducer
 describe('uiReducer', () => {
-  // Test for the initial state when no action is passed
   it('should return the initial state when no action is passed', () => {
-    const state = uiReducer(undefined, {}); // Pass undefined state and an empty action
-    expect(state).toEqual(initialState); // Expect the state to be equal to the initial state
+    const state = uiReducer(undefined, {});
+    expect(state).toEqual(initialState);
   });
 
-  // Test for the initial state when a non-related action is passed (e.g., SELECT_COURSE)
-  it('should return the initial state when the action SELECT_COURSE is passed', () => {
-    const action = { type: 'SELECT_COURSE' }; // Non-related action
-    const state = uiReducer(undefined, action);
-    expect(state).toEqual(initialState); // Expect the state to remain as the initial state
+  it('should return the initial state when an unrelated action is passed', () => {
+    const state = uiReducer(undefined, { type: 'SELECT_COURSE' });
+    expect(state).toEqual(initialState);
   });
 
-  // Test for DISPLAY_NOTIFICATION_DRAWER action
-  it('should change isNotificationDrawerVisible property to true when DISPLAY_NOTIFICATION_DRAWER action is passed', () => {
-    const action = { type: DISPLAY_NOTIFICATION_DRAWER };
-    const expectedState = {
-      ...initialState,
-      isNotificationDrawerVisible: true,
-    };
-    const state = uiReducer(undefined, action);
-    expect(state).toEqual(expectedState); // Expect the state to have isNotificationDrawerVisible set to true
+  it('should handle DISPLAY_NOTIFICATION_DRAWER action', () => {
+    const state = uiReducer(undefined, { type: DISPLAY_NOTIFICATION_DRAWER });
+    expect(state.get('isNotificationDrawerVisible')).toBe(true);
+  });
+
+  it('should handle LOGIN action and update user state', () => {
+    const user = { email: 'test@example.com', password: 'password' };
+    const state = uiReducer(undefined, { type: LOGIN, user });
+    expect(state.get('user')).toEqual(Map(user));
+    expect(state.get('user').get('email')).toBe('test@example.com');
+  });
+
+  it('should handle LOGOUT action and clear user state', () => {
+    const user = { email: 'test@example.com', password: 'password' };
+    const stateWithUser = uiReducer(initialState.set('user', Map(user)), { type: LOGOUT });
+    expect(stateWithUser.get('isUserLoggedIn')).toBe(false);
+    expect(stateWithUser.get('user')).toEqual(Map({}));
   });
 });

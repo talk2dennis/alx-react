@@ -1,3 +1,4 @@
+import { Map } from 'immutable';
 import {
     LOGIN,
     LOGOUT,
@@ -7,46 +8,28 @@ import {
     LOGIN_FAILURE,
   } from '../actions/uiActionTypes';
   
-  export const initialState = {
+  export const initialState = Map({
     isNotificationDrawerVisible: false,
     isUserLoggedIn: false,
-    user: {},
-  };
+    user: Map({}),
+  });
   
   const uiReducer = (state = initialState, action) => {
     switch (action.type) {
       case DISPLAY_NOTIFICATION_DRAWER:
-        return {
-          ...state,
-          isNotificationDrawerVisible: true,
-        };
+        return state.set('isNotificationDrawerVisible', true);
   
       case HIDE_NOTIFICATION_DRAWER:
-        return {
-          ...state,
-          isNotificationDrawerVisible: false,
-        };
+        return state.set('isNotificationDrawerVisible', false);
   
       case LOGIN_SUCCESS:
-        return {
-          ...state,
-          isUserLoggedIn: true,
-          user: action.user, // Update the user state with the user data from the action
-        };
+        return state.set('isUserLoggedIn', true).set('user', Map(action.user));
   
       case LOGIN_FAILURE:
-        return {
-          ...state,
-          isUserLoggedIn: false,
-          user: {}, // Clear the user data on login failure
-        };
+        return state.set('isUserLoggedIn', false).set('user', Map({}));
   
       case LOGOUT:
-        return {
-          ...state,
-          isUserLoggedIn: false,
-          user: {}, // Clear the user data on logout
-        };
+        return state.set('isUserLoggedIn', false).set('user', Map({}));
   
       default:
         return state; // Ensure the default case returns the current state
