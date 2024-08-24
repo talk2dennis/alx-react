@@ -1,6 +1,5 @@
 import { Map, fromJS } from 'immutable';
-import { FETCH_NOTIFICATIONS_SUCCESS, MARK_AS_READ, SET_TYPE_FILTER } from "../actions/notificationActionTypes";
-import { notificationsNormalizer } from "../schema/notifications";
+import { filterTypeSelected, getNotifications, getUnreadNotifications } from './notificationSelector';
 
 describe('notification selectors', () => {
     const state = fromJS({
