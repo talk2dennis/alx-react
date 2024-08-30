@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from 'react-redux';
+import { displayNotificationDrawer, hideNotificationDrawer } from '../actions/uiActionCreators';
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import Login from "../Login/Login";
@@ -10,14 +11,13 @@ import BodySection from "../BodySection/BodySection";
 import { StyleSheet, css } from "aphrodite";
 import PropTypes from "prop-types";
 import { getLatestNotification } from "../utils/utils";
-import AppContext, {defaultUser} from "./AppContext";
+import AppContext, { defaultUser } from "./AppContext";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      displayDrawer: false,
       user: defaultUser,
       logOut: this.logOut,
       listNotifications: [
@@ -28,8 +28,6 @@ class App extends React.Component {
     };
 
     this.handleKeyPress = this.handleKeyPress.bind(this);
-    this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
-    this.handleHideDrawer = this.handleHideDrawer.bind(this);
     this.logIn = this.logIn.bind(this);
     this.logOut = this.logOut.bind(this);
     this.markNotificationAsRead = this.markNotificationAsRead.bind(this);
@@ -48,16 +46,6 @@ class App extends React.Component {
       this.props.logOut();
     }
   }
-
-  handleDisplayDrawer = () => {
-    console.log("Opening drawer");
-    this.setState({ displayDrawer: true });
-  };
-  
-  handleHideDrawer = () => {
-    console.log("Closing drawer");
-    this.setState({ displayDrawer: false });
-  };
 
   // logIn function that takes as argument email and password and updates state
   logIn(email, password) {
@@ -95,6 +83,8 @@ class App extends React.Component {
   }
 
   render() {
+    const { displayDrawer, displayNotificationDrawer, hideNotificationDrawer } = this.props;
+
     return (
       <AppContext.Provider value={{ user: this.state.user, logOut: this.logOut }}>
         <React.Fragment>
@@ -102,9 +92,9 @@ class App extends React.Component {
             <div className="heading-section">
               <Notifications
                 listNotifications={this.state.listNotifications}
-                displayDrawer={this.props.displayDrawer}
-                handleDisplayDrawer={this.handleDisplayDrawer}
-                handleHideDrawer={this.handleHideDrawer}
+                displayDrawer={displayDrawer}
+                handleDisplayDrawer={displayNotificationDrawer}
+                handleHideDrawer={hideNotificationDrawer}
                 markNotificationAsRead={this.markNotificationAsRead}
               />
               <Header />
@@ -148,6 +138,12 @@ const mapStateToProps = (state) => {
   };
 };
 
+// Map dispatch to props
+const mapDispatchToProps = {
+  displayNotificationDrawer,
+  hideNotificationDrawer
+};
+
 App.defaultProps = {
   isLoggedIn: false,
   logOut: () => {
@@ -158,7 +154,10 @@ App.defaultProps = {
 App.propTypes = {
   isLoggedIn: PropTypes.bool,
   logOut: PropTypes.func,
+  displayDrawer: PropTypes.bool.isRequired,
+  displayNotificationDrawer: PropTypes.func.isRequired,
+  hideNotificationDrawer: PropTypes.func.isRequired,
 };
 
 // Connect the App component to the Redux store
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
