@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from 'react-redux';
-import { displayNotificationDrawer, hideNotificationDrawer } from '../actions/uiActionCreators';
+import { displayNotificationDrawer, hideNotificationDrawer, loginRequest } from '../actions/uiActionCreators';
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import Login from "../Login/Login";
@@ -27,7 +27,6 @@ class App extends React.Component {
       ],
     };
 
-    this.logIn = this.logIn.bind(this);
     this.logOut = this.logOut.bind(this);
     this.markNotificationAsRead = this.markNotificationAsRead.bind(this);
   }
@@ -46,16 +45,6 @@ class App extends React.Component {
     }
   }
 
-  // logIn function that takes as argument email and password and updates state
-  logIn(email, password) {
-    this.setState({
-      user: {
-        email,
-        password,
-        isLoggedIn: true
-      }
-    });
-  }
 
   // Modify the logOut function to reset the value of the user object in the local state
   logOut() {
@@ -82,7 +71,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { displayDrawer, displayNotificationDrawer, hideNotificationDrawer } = this.props;
+    const { displayDrawer, displayNotificationDrawer, hideNotificationDrawer, loginRequest } = this.props;
     return (
       <AppContext.Provider value={{ user: this.state.user, logOut: this.logOut }}>
         <React.Fragment>
@@ -103,7 +92,7 @@ class App extends React.Component {
               </BodySectionWithMarginBottom>
             ) : (
               <BodySectionWithMarginBottom title="Log in to continue">
-                <Login logIn={this.logIn} />
+                <Login logIn={loginRequest} />
               </BodySectionWithMarginBottom>
             )}
             <BodySection title="News from the school">
@@ -139,7 +128,8 @@ const mapStateToProps = (state) => {
 // Map dispatch to props
 const mapDispatchToProps = {
   displayNotificationDrawer,
-  hideNotificationDrawer
+  hideNotificationDrawer,
+  loginRequest
 };
 
 App.defaultProps = {
@@ -158,6 +148,7 @@ App.propTypes = {
   displayDrawer: PropTypes.bool,
   displayNotificationDrawer: PropTypes.func,
   hideNotificationDrawer: PropTypes.func,
+  loginRequest: PropTypes.func.isRequired,
 };
 
 // Connect the App component to the Redux store
