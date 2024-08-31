@@ -41,13 +41,26 @@ const loginFailure = () => {
 export const loginRequest = (email, password) => {
     return async (dispatch) => {
       dispatch(login(email, password));
+  
       try {
-            const response = await fetch('/login-success.json');
-            const data = await response.json();
-            dispatch(loginSuccess());
-        } catch {
-            dispatch(loginFailure());
+        const response = await fetch('/login-success.json', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+  
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
+  
+        const data = await response.json();
+        console.log('Login successful:', data);
+        dispatch(loginSuccess());
+      } catch (error) {
+        console.error('Login failed:', error);
+        dispatch(loginFailure());
+      }
     };
   };
 
