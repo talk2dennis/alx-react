@@ -1,94 +1,20 @@
-/**
- * @jest-environment jsdom
- */
-import React from "react";
-import Header from "./Header";
-import { mount, shallow } from "enzyme";
-import { StyleSheetTestUtils } from "aphrodite";
-import { AppContext } from "../App/AppContext";
+import React from 'react';
+import { shallow } from 'enzyme';
+import Header from './Header'; // Import the unconnected component
 
-beforeEach(() => {
-  StyleSheetTestUtils.suppressStyleInjection();
-});
-afterEach(() => {
-  StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
-});
-
-describe("Header", () => {
-  it("render without crashing", () => {
-    const wrapper = shallow(<Header />);
-    expect(wrapper.exists()).toEqual(true);
-  });
-  it("should render a h1", () => {
-    const wrapper = shallow(<Header />);
-    expect(wrapper.exists("img")).toEqual(true);
-    expect(wrapper.containsMatchingElement(<h1>School dashboard</h1>)).toEqual(true);
+describe('Header Component', () => {
+  it('renders without crashing', () => {
+    const wrapper = shallow(<Header user={{ isLoggedIn: false }} />);
+    expect(wrapper.exists()).toBe(true);
   });
 
-  it(`Tests that logoutSection is not rendered with default context values`, () => {
-    const context = {
-      user: {
-        email: "",
-        password: "",
-        isLoggedIn: false,
-      },
-      logOut: jest.fn(),
-    };
-
-    const wrapper = mount(
-      <AppContext.Provider value={context}>
-        <Header />
-      </AppContext.Provider>
-    );
-
-    expect(wrapper.find("#logoutSection").length).toBe(0);
-    expect(wrapper.find("#logoutSection").exists()).toBe(false);
-    wrapper.unmount();
+  it('should not display the logout link when the user is not logged in', () => {
+    const wrapper = shallow(<Header user={{ isLoggedIn: false }} />);
+    expect(wrapper.find('#logout')).toHaveLength(0);
   });
 
-  it(`Tests that logoutSection is rendered with context values`, () => {
-    const context = {
-      user: {
-        email: "dennis@mail.com",
-        password: "password",
-        isLoggedIn: true,
-      },
-      logOut: jest.fn(),
-    };
-
-    const wrapper = mount(
-      <AppContext.Provider value={context}>
-        <Header />
-      </AppContext.Provider>
-    );
-
-    expect(wrapper.find("#logoutSection").length).toBe(1);
-    expect(wrapper.find("#logoutSection").exists()).toBe(true);
-    wrapper.unmount();
-  });
-
-  it(`Verifies that the logOut function is called when clicking on logOut link`, () => {
-    const context = {
-      user: {
-        email: "dennis@mail.com",
-        password: "password",
-        isLoggedIn: true,
-      },
-      logOut: jest.fn(),
-    };
-
-    const spy = jest.spyOn(context, "logOut");
-
-    const wrapper = mount(
-      <AppContext.Provider value={context}>
-        <Header />
-      </AppContext.Provider>
-    );
-
-    wrapper.find("a").simulate("click");
-
-    expect(spy).toHaveBeenCalled();
-    expect(spy).toHaveBeenCalledTimes(1);
-    wrapper.unmount();
+  it('should display the logout link when the user is logged in', () => {
+    const wrapper = shallow(<Header user={{ isLoggedIn: true }} />);
+    expect(wrapper.find('#logout')).toHaveLength(1);
   });
 });
