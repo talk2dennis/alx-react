@@ -1,30 +1,49 @@
-// uiReducer.js
+import uiReducer from './uiReducer';
 import { Map } from 'immutable';
-import {
-  LOGIN,
-  LOGOUT,
-  LOGIN_SUCCESS,
-  LOGIN_FAILURE,
-  DISPLAY_NOTIFICATION_DRAWER,
-  HIDE_NOTIFICATION_DRAWER,
-} from '../actions/uiActionTypes';
+import { LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT } from '../actions/uiActionTypes';
 
-export const initialState = Map({
-  isNotificationDrawerVisible: false,
-  isUserLoggedIn: false,
-  user: Map({}),
+describe('uiReducer', () => {
+  it('should return the initial state', () => {
+    const state = uiReducer(undefined, {});
+    expect(state.toJS()).toEqual({
+      isNotificationDrawerVisible: false,
+      isUserLoggedIn: false,
+      user: null,
+    });
+  });
+
+  it('should handle LOGIN_SUCCESS', () => {
+    const action = {
+      type: LOGIN_SUCCESS,
+      data: { email: 'user@example.com', name: 'John Doe' },
+    };
+    const state = uiReducer(undefined, action);
+    expect(state.get('isUserLoggedIn')).toBe(true);
+    expect(state.get('user')).toEqual({ email: 'user@example.com', name: 'John Doe' });
+  });
+
+  it('should handle LOGIN_FAILURE', () => {
+    const action = {
+      type: LOGIN_FAILURE,
+    };
+    const state = uiReducer(undefined, action);
+    expect(state.get('isUserLoggedIn')).toBe(false);
+    expect(state.get('user')).toBe(null);
+  });
+
+  it('should handle LOGOUT', () => {
+    const initialState = Map({
+      isNotificationDrawerVisible: false,
+      isUserLoggedIn: true,
+      user: { email: 'user@example.com', name: 'John Doe' },
+    });
+
+    const action = {
+      type: LOGOUT,
+    };
+
+    const state = uiReducer(initialState, action);
+    expect(state.get('isUserLoggedIn')).toBe(false);
+    expect(state.get('user')).toBe(null);
+  });
 });
-
-const uiReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case LOGIN:
-      return state.set('user', Map(action.user));
-
-    // Other cases...
-
-    default:
-      return state;
-  }
-};
-
-export default uiReducer;
