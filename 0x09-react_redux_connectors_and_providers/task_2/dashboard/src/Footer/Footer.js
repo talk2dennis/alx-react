@@ -5,11 +5,11 @@ import PropTypes from "prop-types";
 import { getFullYear, getFooterCopy } from "../utils/utils";
 
 
-const Footer = ({ user }) => {
+const Footer = ({ user, isLoggedIn }) => {
   return (
     <>
       <div className="App-footer">
-        <p>{user.isLoggedIn && <a href="#">Contact us</a>}</p>
+        <p>{isLoggedIn && <a href="#">Contact us</a>}</p>
         <p>Copyright {getFullYear()} - {getFooterCopy()}</p>
       </div>
     </>
@@ -23,12 +23,12 @@ Footer.propTypes = {
 };
 
 Footer.defaultProps = {
-  user: { isLoggedIn: false },
+  isLoggedIn: false,
 };
 
 // Create mapStateToProps
 const mapStateToProps = (state) => ({
-  user: state.get('user'),
+  isLoggedIn: state.get('isUserLoggedIn'),
 });
 
 // Connect the component to Redux

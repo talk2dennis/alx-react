@@ -26,13 +26,13 @@ const styles = StyleSheet.create({
   },
 });
 
-function Header({ user, logout }) {
+function Header({ user, logout , isLoggedIn}) {
   return (
     <>
       <div className={css(styles.appHeader)}>
         <img src={logo} className={css(styles.appHeaderImage)} alt="logo" />
         <h1>School dashboard</h1>
-        {user.isLoggedIn && (
+        {isLoggedIn && (
           <div className={css(styles.logoutSection)}  id="logoutSection">
             Welcome <strong>{user.email}</strong> (<a href="#" onClick={logout}><em>logout</em></a>)
           </div>
@@ -44,9 +44,9 @@ function Header({ user, logout }) {
 
 Header.propTypes = {
   user: PropTypes.shape({
-    isLoggedIn: PropTypes.bool.isRequired,
     email: PropTypes.string,
   }).isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
   logout: PropTypes.func.isRequired,
 };
 
@@ -57,6 +57,7 @@ Header.defaultProps = {
 // mapStateToProps to get the user from the Redux store
 const mapStateToProps = (state) => ({
   user: state.get('user'),
+  isLoggedIn: state.get('isUserLoggedIn')
 });
 
 // Connect the component to Redux and the logout action creator

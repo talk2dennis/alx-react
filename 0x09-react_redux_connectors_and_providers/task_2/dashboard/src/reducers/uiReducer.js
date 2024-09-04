@@ -9,9 +9,9 @@ import {
   } from '../actions/uiActionTypes';
   
   const initialState = Map({
-    user: { isLoggedIn: false },
     isNotificationDrawerVisible: false,
     isUserLoggedIn: false,
+    user: null,
   });
   
   
@@ -25,11 +25,13 @@ import {
   
       case LOGIN_SUCCESS:
         return state
-        .set('user', { isLoggedIn: true, ...action.user })  // Update the user data in the state
-        .set('isUserLoggedIn', true);
+        .set('isUserLoggedIn', true)
+        .set('user', action.user); // action.data is the user object
   
       case LOGIN_FAILURE:
-        return state.set('isUserLoggedIn', false).set('user', Map({}));
+        return state
+        .set('isUserLoggedIn', false)
+        .set('user', null); // set user to null
   
       case LOGOUT:
         return state.set('isUserLoggedIn', false).set('user', Map({}));
