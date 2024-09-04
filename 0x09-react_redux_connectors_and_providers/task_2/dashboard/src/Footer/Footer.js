@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { getFullYear, getFooterCopy } from "../utils/utils";
 
 
-const Footer = ({ user, isLoggedIn }) => {
+const Footer = ({ isLoggedIn }) => {
   return (
     <>
       <div className="App-footer">
