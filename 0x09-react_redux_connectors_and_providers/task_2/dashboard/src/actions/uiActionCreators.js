@@ -26,9 +26,10 @@ export const hideNotificationDrawer = () => {
     };
 };
 
-const loginSuccess = () => {
+const loginSuccess = (user) => {
     return {
         type: LOGIN_SUCCESS,
+        user,
     };
 };
 
@@ -56,7 +57,7 @@ export const loginRequest = (email, password) => {
   
         const data = await response.json();
         console.log('Login successful:', data);
-        dispatch(loginSuccess());
+        dispatch(loginSuccess(data.user));
       } catch (error) {
         console.error('Login failed:', error);
         dispatch(loginFailure());

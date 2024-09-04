@@ -71,7 +71,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { displayDrawer, displayNotificationDrawer, hideNotificationDrawer, loginRequest } = this.props;
+    const { displayDrawer, displayNotificationDrawer, hideNotificationDrawer, loginRequest, isLoggedIn } = this.props;
     return (
       <AppContext.Provider value={{ user: this.state.user, logOut: this.logOut }}>
         <React.Fragment>
@@ -86,7 +86,7 @@ class App extends React.Component {
               />
               <Header />
             </div>
-            {this.state.user.isLoggedIn ? (
+            {isLoggedIn ? (
               <BodySectionWithMarginBottom title="Course list">
                 <CourseList listCourses={this.listCourses} />
               </BodySectionWithMarginBottom>

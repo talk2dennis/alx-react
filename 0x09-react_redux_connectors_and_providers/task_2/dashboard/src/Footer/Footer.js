@@ -9,6 +9,7 @@ const Footer = ({ user }) => {
   return (
     <>
       <div className="App-footer">
+        <p>{ console.log('user: ', user) }</p>
         <p>{user.isLoggedIn && <a href="#">Contact us</a>}</p>
         <p>Copyright {getFullYear()} - {getFooterCopy()}</p>
       </div>

@@ -8,11 +8,12 @@ import {
     LOGIN_FAILURE,
   } from '../actions/uiActionTypes';
   
-  export const initialState = Map({
+  const initialState = Map({
+    user: { isLoggedIn: false },
     isNotificationDrawerVisible: false,
     isUserLoggedIn: false,
-    user: Map({}),
   });
+  
   
   const uiReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -23,7 +24,9 @@ import {
         return state.set('isNotificationDrawerVisible', false);
   
       case LOGIN_SUCCESS:
-        return state.set('isUserLoggedIn', true).set('user', Map(action.user));
+        return state
+        .set('user', { isLoggedIn: true, ...action.user })  // Update the user data in the state
+        .set('isUserLoggedIn', true);
   
       case LOGIN_FAILURE:
         return state.set('isUserLoggedIn', false).set('user', Map({}));
