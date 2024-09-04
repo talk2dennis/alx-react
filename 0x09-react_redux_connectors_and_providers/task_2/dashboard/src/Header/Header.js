@@ -1,5 +1,8 @@
 import React from "react";
 import logo from "../assets/holberton-logo.jpg";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { logout } from "../actions/uiActionCreators";
 import { StyleSheet, css } from 'aphrodite';
 import AppContext from "../App/AppContext";
 
@@ -23,8 +26,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function Header() {
-  const { user, logOut } = React.useContext(AppContext)
+function Header({ user, logout }) {
   return (
     <>
       <div className={css(styles.appHeader)}>
@@ -32,7 +34,7 @@ function Header() {
         <h1>School dashboard</h1>
         {user.isLoggedIn && (
           <div className={css(styles.logoutSection)}  id="logoutSection">
-            Welcome <strong>{user.email}</strong> (<a href="#" onClick={logOut}><em>logout</em></a>)
+            Welcome <strong>{user.email}</strong> (<a href="#" onClick={logout}><em>logout</em></a>)
           </div>
         )}
       </div>
@@ -40,4 +42,22 @@ function Header() {
   );
 }
 
-export default Header;
+Header.propTypes = {
+  user: PropTypes.shape({
+    isLoggedIn: PropTypes.bool.isRequired,
+    email: PropTypes.string,
+  }).isRequired,
+  logout: PropTypes.func.isRequired,
+};
+
+Header.defaultProps = {
+  user: { isLoggedIn: false, email: '' },
+};
+
+// mapStateToProps to get the user from the Redux store
+const mapStateToProps = (state) => ({
+  user: state.get('user'),
+});
+
+// Connect the component to Redux and the logout action creator
+export default connect(mapStateToProps, { logout })(Header);

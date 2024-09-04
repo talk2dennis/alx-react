@@ -56,8 +56,7 @@ export const loginRequest = (email, password) => {
         }
   
         const data = await response.json();
-        console.log('Login successful:', data);
-        dispatch(loginSuccess(data.user));
+        dispatch(loginSuccess(data));
       } catch (error) {
         console.error('Login failed:', error);
         dispatch(loginFailure());
