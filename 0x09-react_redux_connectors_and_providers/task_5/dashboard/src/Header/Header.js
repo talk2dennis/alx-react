@@ -51,13 +51,13 @@ Header.propTypes = {
 };
 
 Header.defaultProps = {
-  user: { isLoggedIn: false, email: '' },
+  isLoggedIn: false,
 };
 
 // mapStateToProps to get the user from the Redux store
 const mapStateToProps = (state) => ({
-  user: state.get('user'),
-  isLoggedIn: state.get('isUserLoggedIn')
+  user: state.ui.get('user'),
+  isLoggedIn: state.ui.get('isUserLoggedIn')
 });
 
 // Connect the component to Redux and the logout action creator

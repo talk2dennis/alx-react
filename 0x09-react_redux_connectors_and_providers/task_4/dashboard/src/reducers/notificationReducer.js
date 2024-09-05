@@ -19,9 +19,8 @@ export const notificationReducer = (state = initialState, action) => {
         case SET_LOADING_STATE:
             return state.set('isLoading', action.loading);
         case FETCH_NOTIFICATIONS_SUCCESS:
-            const normalizedData = notificationsNormalizer(action.data);
             return state.merge({
-                notifications: Map(normalizedData.entities.notifications),
+                notifications: Map(action.data.entities.notifications),
             });
         case MARK_AS_READ:
             return state.setIn(['notifications', action.index.toString(), 'isRead'], true);

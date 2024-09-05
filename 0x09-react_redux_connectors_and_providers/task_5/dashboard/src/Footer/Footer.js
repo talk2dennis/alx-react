@@ -28,7 +28,7 @@ Footer.defaultProps = {
 
 // Create mapStateToProps
 const mapStateToProps = (state) => ({
-  isLoggedIn: state.get('isUserLoggedIn'),
+  isLoggedIn: state.ui.get('isUserLoggedIn'),
 });
 
 // Connect the component to Redux

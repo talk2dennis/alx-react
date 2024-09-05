@@ -7,7 +7,7 @@ const initialState = Map({
 });
 
 
-export const courseReducer = (state = initialState, action) => {
+const courseReducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_COURSE_SUCCESS:
             const normalizedData = coursesNormalizer(action.data);

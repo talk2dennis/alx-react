@@ -1,9 +1,11 @@
 import React, { PureComponent } from "react";
+import { connect } from 'react-redux';
 import closeIcon from "../assets/close-icon.png";
 import NotificationItem from "./NotificationItem";
 import PropTypes from "prop-types";
 import NotificationItemShape from "./NotificationItemShape";
 import { StyleSheet, css } from "aphrodite";
+import { fetchNotifications } from '../actions/notificationActionCreators';
 
 const styles = StyleSheet.create({
   notifications: {
@@ -13,6 +15,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: '1.8em',
     right: '0',
+    width: '30%',
+    background: 'white',
+    height: '30%',
+    overflowY: 'scroll'
   },
   notificationHeader: {
     display: 'flex',
@@ -35,13 +41,19 @@ class Notifications extends PureComponent {
     super(props);
   }
 
+  componentDidMount() {
+    this.props.fetchNotifications();
+    console.log('Notifications from props:', this.props.listNotifications);
+  }
+
   render() {
+    const { listNotifications, isLoading, handleDisplayDrawer, handleHideDrawer } = this.props;
     return (
       <React.Fragment>
-        <div className={css(styles.menuItem)} onClick={this.props.handleDisplayDrawer}>
+        <div className={css(styles.menuItem)} onClick={handleDisplayDrawer}>
           <p>Your notifications</p>
         </div>
-        {this.props.displayDrawer ? (
+        {this.props.displayDrawer  ? (
           <div className={css(styles.notifications)}>
             <button
               style={{
@@ -57,24 +69,28 @@ class Notifications extends PureComponent {
                 outline: "none",
               }}
               aria-label="Close"
-              onClick={this.props.handleHideDrawer}
+              onClick={handleHideDrawer}
             >
               <img src={closeIcon} alt="close icon" width="10px" />
             </button>
-            {this.props.listNotifications.length !== 0 ? <p>Here is the list of notifications</p> : null}
-            <ul>
-              {this.props.listNotifications.length === 0 ? <NotificationItem type="default" value="No new notification for now" /> : null}
-              {this.props.listNotifications.map((val) => (
-                <NotificationItem
-                  type={val.type}
-                  value={val.value}
-                  html={val.html}
-                  key={val.id}
-                  markAsRead={() => this.props.markNotificationAsRead(val.id)} 
-                  id={val.id}
-                />
-              ))}
-            </ul>
+            {isLoading ? <p>Loading notifications...</p> : (
+              <>
+                {listNotifications.length !== 0 ? <p>Here is the list of notifications</p> : null}
+                <ul>
+                  {listNotifications.length === 0 ? <NotificationItem type="default" value="No new notification for now" /> : null}
+                  {listNotifications.map((val) => (
+                      <NotificationItem
+                      type={val.context.type}
+                      value={val.context.value}
+                      html={val.context.html}
+                      key={val.id}
+                      markAsRead={() => this.props.markNotificationAsRead(val.id)} 
+                      id={val.context.guid}
+                    />
+                  ))}
+                </ul>
+              </>
+            )}
           </div>
         ) : null}
       </React.Fragment>
@@ -98,12 +114,17 @@ Notifications.defaultProps = {
 };
 
 
-Notifications.defaultProps = {
-  displayDrawer: false,
-  listNotifications: [],
-  handleDisplayDrawer: () => {},
-  handleHideDrawer: () => {},
-  markNotificationAsRead: () => {},
+
+const mapStateToProps = (state) => ({
+  listNotifications: state.notifications.get('notifications'),
+  isLoading: state.notifications.get('isLoading'),
+  displayDrawer: state.ui.get('isNotificationDrawerVisible'),
+});
+
+const mapDispatchToProps = {
+  fetchNotifications,
+  handleDisplayDrawer: () => ({ type: 'DISPLAY_NOTIFICATION_DRAWER' }),
+  handleHideDrawer: () => ({ type: 'HIDE_NOTIFICATION_DRAWER' }),
 };
 
-export default Notifications;
+export default connect(mapStateToProps, mapDispatchToProps)(Notifications);

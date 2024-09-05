@@ -15,6 +15,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: '1.8em',
     right: '0',
+    width: '30%',
+    background: 'white',
+    height: '30%',
+    overflowY: 'scroll'
   },
   notificationHeader: {
     display: 'flex',
@@ -39,10 +43,11 @@ class Notifications extends PureComponent {
 
   componentDidMount() {
     this.props.fetchNotifications();
+    console.log('Notifications from props:', this.props.listNotifications);
   }
 
   render() {
-    const { notifications, isLoading, handleDisplayDrawer, handleHideDrawer } = this.props;
+    const { listNotifications, isLoading, handleDisplayDrawer, handleHideDrawer } = this.props;
     return (
       <React.Fragment>
         <div className={css(styles.menuItem)} onClick={handleDisplayDrawer}>
@@ -70,17 +75,17 @@ class Notifications extends PureComponent {
             </button>
             {isLoading ? <p>Loading notifications...</p> : (
               <>
-                {notifications.length !== 0 ? <p>Here is the list of notifications</p> : null}
+                {listNotifications.length !== 0 ? <p>Here is the list of notifications</p> : null}
                 <ul>
-                  {notifications.length === 0 ? <NotificationItem type="default" value="No new notification for now" /> : null}
-                  {notifications.map((val) => (
-                    <NotificationItem
-                      type={val.type}
-                      value={val.value}
-                      html={val.html}
+                  {listNotifications.length === 0 ? <NotificationItem type="default" value="No new notification for now" /> : null}
+                  {listNotifications.map((val) => (
+                      <NotificationItem
+                      type={val.context.type}
+                      value={val.context.value}
+                      html={val.context.html}
                       key={val.id}
                       markAsRead={() => this.props.markNotificationAsRead(val.id)} 
-                      id={val.id}
+                      id={val.context.guid}
                     />
                   ))}
                 </ul>
@@ -109,16 +114,9 @@ Notifications.defaultProps = {
 };
 
 
-Notifications.defaultProps = {
-  displayDrawer: false,
-  listNotifications: [],
-  handleDisplayDrawer: () => {},
-  handleHideDrawer: () => {},
-  markNotificationAsRead: () => {},
-};
 
 const mapStateToProps = (state) => ({
-  notifications: state.notifications.get('notifications'),
+  listNotifications: state.notifications.get('notifications'),
   isLoading: state.notifications.get('isLoading'),
   displayDrawer: state.ui.get('isNotificationDrawerVisible'),
 });

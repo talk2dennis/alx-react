@@ -4,14 +4,14 @@ import { thunk } from 'redux-thunk';
 import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom/client';
 import App from './App/App';
-import uiReducer from './reducers/uiReducer';
+import { rootReducer } from './reducers/rootReducer';
 import { Map } from 'immutable';
 
 
 // Setting up Redux DevTools extension with Thunk middleware
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
-  uiReducer,
+  rootReducer,
   Map(),
   composeEnhancers(applyMiddleware(thunk))
 );

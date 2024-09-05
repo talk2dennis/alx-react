@@ -1,18 +1,26 @@
-import { Map } from 'immutable';
-import { FETCH_NOTIFICATIONS_SUCCESS, MARK_AS_READ, SET_TYPE_FILTER } from "../actions/notificationActionTypes";
+import { is, Map } from 'immutable';
+import { 
+    FETCH_NOTIFICATIONS_SUCCESS,
+    MARK_AS_READ,
+    SET_TYPE_FILTER,
+    SET_LOADING_STATE,
+} from "../actions/notificationActionTypes";
 import { notificationsNormalizer } from "../schema/notifications";
+
 
 const initialState = Map({
     notifications: Map(),
     filter: 'DEFAULT',
+    isLoading: false,
 });
 
 export const notificationReducer = (state = initialState, action) => {
     switch (action.type) {
+        case SET_LOADING_STATE:
+            return state.set('isLoading', action.loading);
         case FETCH_NOTIFICATIONS_SUCCESS:
-            const normalizedData = notificationsNormalizer(action.data);
             return state.merge({
-                notifications: Map(normalizedData.entities.notifications),
+                notifications: Map(action.data.entities.notifications),
             });
         case MARK_AS_READ:
             return state.setIn(['notifications', action.index.toString(), 'isRead'], true);

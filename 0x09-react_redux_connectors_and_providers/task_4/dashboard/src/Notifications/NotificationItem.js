@@ -6,10 +6,13 @@ import { StyleSheet, css } from "aphrodite";
 const styles = StyleSheet.create({
   defaultNotification: {
     color: 'blue',
+    margin: '10px'
   },
   urgentNotification: {
     color: 'red',
+    margin: '10px'
   },
+
 });
 
 class NotificationItem extends React.PureComponent {

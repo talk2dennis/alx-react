@@ -1,6 +1,6 @@
 import { bindActionCreators } from 'redux';
 import { FETCH_NOTIFICATIONS_SUCCESS, MARK_AS_READ, SET_TYPE_FILTER, SET_LOADING_STATE } from "./notificationActionTypes";
-
+import { notificationsNormalizer } from '../schema/notifications';
 
 export const markAsAread = (index) => {
     return {
@@ -37,13 +37,30 @@ export const setNotifications = (data) => {
     };
 }
 
+// Async action creator to fetch notifications
 export const fetchNotifications = () => {
-    return async (dispatch) => {
+    return (dispatch) => {
+        // Set loading state to true before starting the fetch
         dispatch(setLoadingState(true));
-        const response = await fetch('/notifications');
-        const data = await response.json();
-        dispatch(setNotifications(data));
-        dispatch(setLoadingState(false));
+
+        fetch('/notifications.json')
+            .then(response => response.json())
+            .then(data => {
+                // Dispatch the notifications data once fetched
+                const normalizedData = notificationsNormalizer(data);
+                console.log('Normalized Data:', normalizedData);
+
+                // Check the structure
+                console.log('Normalized Entities:', normalizedData.entities.notifications);
+                dispatch(setNotifications(normalizedData));
+                // Set loading state to false after fetching
+                dispatch(setLoadingState(false));
+            })
+            .catch((error) => {
+                console.error("Error fetching notifications:", error);
+                // Ensure loading state is set to false if there's an error
+                dispatch(setLoadingState(false));
+            });
     };
 };
 
